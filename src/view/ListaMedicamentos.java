@@ -8,6 +8,7 @@ package view;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MedicamentoVO;
 import services.MedicamentoServicos;
@@ -36,10 +37,11 @@ public class ListaMedicamentos extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jtListaMed = new javax.swing.JTable();
-        jbEditarMed = new javax.swing.JButton();
         jbConfirmar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
         jbAdcionarMed = new javax.swing.JButton();
+        jbSalvar = new javax.swing.JButton();
+        jbDeletar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,13 +63,6 @@ public class ListaMedicamentos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtListaMed);
 
-        jbEditarMed.setText("Editar Med Selecionado");
-        jbEditarMed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEditarMedActionPerformed(evt);
-            }
-        });
-
         jbConfirmar.setText("Confirmar");
         jbConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,10 +77,24 @@ public class ListaMedicamentos extends javax.swing.JFrame {
             }
         });
 
-        jbAdcionarMed.setText("Adicionar Medicamento");
+        jbAdcionarMed.setText("Adicionar/Editar Medicamento");
         jbAdcionarMed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAdcionarMedActionPerformed(evt);
+            }
+        });
+
+        jbSalvar.setText("Salvar");
+        jbSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalvarActionPerformed(evt);
+            }
+        });
+
+        jbDeletar.setText("Deletar");
+        jbDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDeletarActionPerformed(evt);
             }
         });
 
@@ -95,22 +104,30 @@ public class ListaMedicamentos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jbEditarMed)
-                .addGap(18, 18, 18)
-                .addComponent(jbConfirmar)
-                .addGap(18, 18, 18)
-                .addComponent(jbCancelar)
-                .addGap(18, 18, 18)
-                .addComponent(jbAdcionarMed)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(186, 186, 186)
+                        .addComponent(jbConfirmar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbCancelar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbAdcionarMed))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jbSalvar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbDeletar)))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 73, Short.MAX_VALUE)
+                .addGap(0, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbEditarMed)
+                    .addComponent(jbSalvar)
+                    .addComponent(jbDeletar))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbConfirmar)
                     .addComponent(jbCancelar)
                     .addComponent(jbAdcionarMed))
@@ -120,10 +137,6 @@ public class ListaMedicamentos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jbEditarMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarMedActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbEditarMedActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
         // TODO add your handling code here:
@@ -140,6 +153,15 @@ public class ListaMedicamentos extends javax.swing.JFrame {
         this.hide();
     }//GEN-LAST:event_jbAdcionarMedActionPerformed
 
+    private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbSalvarActionPerformed
+
+    private void jbDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarActionPerformed
+        // TODO add your handling code here:
+        this.deletar();
+    }//GEN-LAST:event_jbDeletarActionPerformed
+
     
     public void addLinhaParaTabela(String pesq) throws SQLException{
     DefaultTableModel model = (DefaultTableModel) jtListaMed.getModel();
@@ -155,6 +177,28 @@ public class ListaMedicamentos extends javax.swing.JFrame {
       rowData[4] = uVO.getNumeroCas();
       model.addRow(rowData);
     }
+    }
+    
+    
+    
+    public void deletar() {
+        try {
+            //busca linha que usuario clicou.
+            int linha = jtListaMed.getSelectedRow();
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(rootPane, "Você não selecionou nenhuma linha");
+            } else {
+                MedicamentoServicos clis = services.ServicosFactory.getMedicamentoServicos();
+                String pesq = null;
+                //busca o idMeds da linha selecionada. o zero indica que vamos buscar o valor da primeira coluna
+                int idMeds = (int) jtListaMed.getValueAt(linha, 0);
+                clis.deletarMedicamento(idMeds);
+                JOptionPane.showMessageDialog(rootPane, "Cliente Deletado com Sucesso");
+                this.addLinhaParaTabela(pesq);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, "Problema Ao Tentar Deletar Medicamento" + ex.getMessage());
+        }
     }
     
     
@@ -209,7 +253,8 @@ public class ListaMedicamentos extends javax.swing.JFrame {
     private javax.swing.JButton jbAdcionarMed;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbConfirmar;
-    private javax.swing.JButton jbEditarMed;
+    private javax.swing.JButton jbDeletar;
+    private javax.swing.JButton jbSalvar;
     private javax.swing.JTable jtListaMed;
     // End of variables declaration//GEN-END:variables
 }
