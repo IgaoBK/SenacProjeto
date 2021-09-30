@@ -6,8 +6,12 @@
 package view;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import model.MedicamentoVO;
+import services.MedicamentoServicos;
 
 /**
  *
@@ -126,10 +130,36 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbPesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisaNomeActionPerformed
-        // TODO add your handling code here:
-        
+        try {
+            // TODO add your handling code here:
+            String pesq = null;
+            this.addLinhaParaTabela(pesq);
+        } catch (SQLException ex) {
+            Logger.getLogger(jfPesquisaMedicamentos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbPesquisaNomeActionPerformed
 
+    
+    
+     public void addLinhaParaTabela(String pesq) throws SQLException{
+    DefaultTableModel model = (DefaultTableModel) jtListaMed.getModel();
+    model.getDataVector().removeAllElements();
+    model.fireTableDataChanged();
+    Object rowData[] = new Object[5];//define vetor das colunas
+    MedicamentoServicos uis = services.ServicosFactory.getMedicamentoServicos();
+    for (MedicamentoVO uVO: uis.buscarNomeMed(pesq)) {
+      rowData[0] = uVO.getIdMed();
+      rowData[1] = uVO.getMedicamento();
+      rowData[2] = uVO.getSobre();
+      rowData[3] = uVO.getContraindicacao();
+      rowData[4] = uVO.getNumeroCas();
+      model.addRow(rowData);
+    }
+    }
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */

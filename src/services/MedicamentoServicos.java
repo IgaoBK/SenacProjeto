@@ -31,4 +31,8 @@ public class MedicamentoServicos {
         mDAO.deletarMedicamento(idMed);
     }
     
+    public ArrayList<MedicamentoVO> buscarNomeMed(String pesq)throws SQLException{
+        MedicamentoDAO mDAO = DAOFactory.getMedicamentoDAO();
+        return mDAO.buscaNomeMedicamento(pesq);
+    }
 }

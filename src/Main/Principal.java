@@ -25,6 +25,7 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import view.ListaMedicamentos;
 import view.ListaUsuarios;
 
 /**
@@ -63,11 +64,19 @@ public class Principal extends JFrame implements ActionListener {
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
-        /*Medicamento*/
-        menuItem = new JMenuItem("Lista de Medicamentos",
+        /*Medicamento-Pesquisa*/
+        menuItem = new JMenuItem("Pesquisa de Medicamentos",
                 KeyEvent.VK_M);
 
         menuItem.setActionCommand("menuMed");
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
+        
+        /*Medicamento-Admin*/
+        menuItem = new JMenuItem("Lista Administrativa de Medicamentos",
+                KeyEvent.VK_AT);
+
+        menuItem.setActionCommand("adminMed");
         menuItem.addActionListener(this);
         menu.add(menuItem);
      
@@ -92,6 +101,19 @@ public class Principal extends JFrame implements ActionListener {
                 jfPesquisaMedicamentos pm = new jfPesquisaMedicamentos();
                 pm.setVisible(true);
                 pm.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            } catch (SQLException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if ("adminMed".equals(e.getActionCommand())) {
+            try {
+                ListaMedicamentos lm = new ListaMedicamentos();
+                if(cadUsuarios.verificaAdmin==true){
+                lm.setVisible(true);
+                }else{
+                    lm.setVisible(false);
+                }
+                lm.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             } catch (SQLException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -5,6 +5,13 @@
  */
 package view;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import model.MedicamentoVO;
+import services.MedicamentoServicos;
+
 /**
  *
  * @author FNACPOA
@@ -14,7 +21,7 @@ public class ListaMedicamentos extends javax.swing.JFrame {
     /**
      * Creates new form ListaMedicamentos
      */
-    public ListaMedicamentos() {
+    public ListaMedicamentos() throws SQLException {
         initComponents();
     }
 
@@ -29,6 +36,9 @@ public class ListaMedicamentos extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jtListaMed = new javax.swing.JTable();
+        jbEditarMed = new javax.swing.JButton();
+        jbConfirmar = new javax.swing.JButton();
+        jbCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,22 +60,88 @@ public class ListaMedicamentos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtListaMed);
 
+        jbEditarMed.setText("Editar Med Selecionado");
+        jbEditarMed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarMedActionPerformed(evt);
+            }
+        });
+
+        jbConfirmar.setText("Confirmar");
+        jbConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbConfirmarActionPerformed(evt);
+            }
+        });
+
+        jbCancelar.setText("Cancelar/Sair");
+        jbCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jbEditarMed)
+                .addGap(18, 18, 18)
+                .addComponent(jbConfirmar)
+                .addGap(18, 18, 18)
+                .addComponent(jbCancelar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 114, Short.MAX_VALUE)
+                .addGap(0, 73, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbEditarMed)
+                    .addComponent(jbConfirmar)
+                    .addComponent(jbCancelar))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbEditarMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarMedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbEditarMedActionPerformed
+
+    private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jbCancelarActionPerformed
+
+    private void jbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfirmarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbConfirmarActionPerformed
+
+    
+    public void addLinhaParaTabela(String pesq) throws SQLException{
+    DefaultTableModel model = (DefaultTableModel) jtListaMed.getModel();
+    model.getDataVector().removeAllElements();
+    model.fireTableDataChanged();
+    Object rowData[] = new Object[5];//define vetor das colunas
+    MedicamentoServicos uis = services.ServicosFactory.getMedicamentoServicos();
+    for (MedicamentoVO uVO: uis.buscarNomeMed(pesq)) {
+      rowData[0] = uVO.getIdMed();
+      rowData[1] = uVO.getMedicamento();
+      rowData[2] = uVO.getSobre();
+      rowData[3] = uVO.getContraindicacao();
+      rowData[4] = uVO.getNumeroCas();
+      model.addRow(rowData);
+    }
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -96,13 +172,26 @@ public class ListaMedicamentos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListaMedicamentos().setVisible(true);
+                MedicamentoVO mVO = new MedicamentoVO();
+                try {
+                    if(mVO.getIdMed() ==1){
+                        new ListaMedicamentos().setVisible(true);
+                    }else{
+                        new ListaMedicamentos().setVisible(false);
+                    }
+                        
+                } catch (SQLException ex) {
+                    Logger.getLogger(ListaMedicamentos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbCancelar;
+    private javax.swing.JButton jbConfirmar;
+    private javax.swing.JButton jbEditarMed;
     private javax.swing.JTable jtListaMed;
     // End of variables declaration//GEN-END:variables
 }
