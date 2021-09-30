@@ -41,6 +41,18 @@ public class CUsuario {
         return verUsuario;
     }
     
+    public Boolean verificaAdmin(boolean verAdmin) {
+        verAdmin = false;
+        for (UsuarioVO u : usuarios) {
+            if(u.getIdUsuario()==1){
+                verAdmin=true;
+                System.out.println("Bem Vindo Senhor: " + u.getNome());
+            }
+        }
+        return verAdmin;
+    }
+    
+    
     
     public void atualizaCliente(int idUsuario){
         int opcao;

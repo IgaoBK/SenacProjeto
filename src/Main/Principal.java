@@ -108,7 +108,7 @@ public class Principal extends JFrame implements ActionListener {
         if ("adminMed".equals(e.getActionCommand())) {
             try {
                 ListaMedicamentos lm = new ListaMedicamentos();
-                if(cadUsuarios.verificaAdmin==true){
+                if(cadUsuarios.verificaAdmin(verAdmin)){
                 lm.setVisible(true);
                 }else{
                     lm.setVisible(false);
