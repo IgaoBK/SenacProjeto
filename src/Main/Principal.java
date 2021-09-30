@@ -112,6 +112,7 @@ public class Principal extends JFrame implements ActionListener {
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         return contentPane;
+        
     }
 
     private static void createAndShowGUI() {
