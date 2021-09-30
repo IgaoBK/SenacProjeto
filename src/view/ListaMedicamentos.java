@@ -39,6 +39,7 @@ public class ListaMedicamentos extends javax.swing.JFrame {
         jbEditarMed = new javax.swing.JButton();
         jbConfirmar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
+        jbAdcionarMed = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,11 +82,18 @@ public class ListaMedicamentos extends javax.swing.JFrame {
             }
         });
 
+        jbAdcionarMed.setText("Adicionar Medicamento");
+        jbAdcionarMed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAdcionarMedActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jbEditarMed)
@@ -93,7 +101,9 @@ public class ListaMedicamentos extends javax.swing.JFrame {
                 .addComponent(jbConfirmar)
                 .addGap(18, 18, 18)
                 .addComponent(jbCancelar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jbAdcionarMed)
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,7 +112,8 @@ public class ListaMedicamentos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbEditarMed)
                     .addComponent(jbConfirmar)
-                    .addComponent(jbCancelar))
+                    .addComponent(jbCancelar)
+                    .addComponent(jbAdcionarMed))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -122,6 +133,12 @@ public class ListaMedicamentos extends javax.swing.JFrame {
     private void jbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfirmarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbConfirmarActionPerformed
+
+    private void jbAdcionarMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdcionarMedActionPerformed
+        // TODO add your handling code here:
+        jfCadastroMedicamentos.getFrames();
+        this.hide();
+    }//GEN-LAST:event_jbAdcionarMedActionPerformed
 
     
     public void addLinhaParaTabela(String pesq) throws SQLException{
@@ -189,6 +206,7 @@ public class ListaMedicamentos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbAdcionarMed;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbConfirmar;
     private javax.swing.JButton jbEditarMed;
