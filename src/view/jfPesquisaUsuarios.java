@@ -8,7 +8,9 @@ package view;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import model.UsuarioVO;
+import services.UsuarioServicos;
 
 /**
  *
@@ -55,7 +57,7 @@ public class jfPesquisaUsuarios extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Pesquisa de Usuários");
 
-        jbPesquisar.setText("Pesquisar");
+        jbPesquisar.setText("Pesquisar por Nome");
         jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbPesquisarActionPerformed(evt);
@@ -87,7 +89,7 @@ public class jfPesquisaUsuarios extends javax.swing.JFrame {
                         .addComponent(jtfPesquisa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jbPesquisar)
-                        .addGap(107, 107, 107)
+                        .addGap(72, 72, 72)
                         .addComponent(jbCancelar)
                         .addGap(155, 155, 155))))
         );
@@ -111,13 +113,31 @@ public class jfPesquisaUsuarios extends javax.swing.JFrame {
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
         // TODO add your handling code here:
-        jfPesquisaUsuarios.this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
+    public void addLinhaParaTabela() throws SQLException{
+    DefaultTableModel model = (DefaultTableModel) jtListaUsuarios.getModel();
+    model.getDataVector().removeAllElements();
+    model.fireTableDataChanged();
+    Object rowData[] = new Object[5];//define vetor das colunas
+    UsuarioServicos uis = services.ServicosFactory.getUsuarioServicos();
+    for (UsuarioVO uVO: uis.buscarUsuarios()) {
+      rowData[0] = uVO.getIdUsuario();
+      rowData[1] = uVO.getNome();
+      rowData[2] = uVO.getEmail();
+      rowData[3] = uVO.getSenha();
+      rowData[4] = uVO.getTelefone();
+      model.addRow(rowData);
+    }
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */

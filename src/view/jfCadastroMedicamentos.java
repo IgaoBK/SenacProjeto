@@ -30,6 +30,7 @@ public class jfCadastroMedicamentos extends javax.swing.JFrame {
     public jfCadastroMedicamentos() throws SQLException {
         initComponents();
         this.addLinhaParaTabela();
+        jbConfirmar.setEnabled(Boolean.FALSE);
     }
 
     /**

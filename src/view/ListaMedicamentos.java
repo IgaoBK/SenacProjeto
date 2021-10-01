@@ -177,7 +177,7 @@ public class ListaMedicamentos extends javax.swing.JFrame {
                 //busca o idMeds da linha selecionada. o zero indica que vamos buscar o valor da primeira coluna
                 int idMeds = (int) jtListaMed.getValueAt(linha, 0);
                 clis.deletarMedicamento(idMeds);
-                JOptionPane.showMessageDialog(rootPane, "Cliente Deletado com Sucesso");
+                JOptionPane.showMessageDialog(rootPane, "Medicamento Deletado com Sucesso");
                 this.addLinhaParaTabela();
             }
         } catch (Exception ex) {

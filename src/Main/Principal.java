@@ -27,6 +27,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import view.ListaMedicamentos;
 import view.ListaUsuarios;
+import view.jfCadastro;
+
 
 /**
  *
@@ -79,6 +81,22 @@ public class Principal extends JFrame implements ActionListener {
         menuItem.setActionCommand("adminMed");
         menuItem.addActionListener(this);
         menu.add(menuItem);
+        
+        /*Usuário-Admin*/
+        menuItem = new JMenuItem("Lista Administrativa de Usuários",
+                KeyEvent.VK_ALT);
+
+        menuItem.setActionCommand("adminUser");
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
+        
+        /*Usuário-Cadastro*/
+        menuItem = new JMenuItem("Cadastro de Usuários",
+                KeyEvent.VK_C);
+
+        menuItem.setActionCommand("adminCadastro");
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
      
         return menuBar;
         
@@ -114,6 +132,28 @@ public class Principal extends JFrame implements ActionListener {
                   //  lm.setVisible(false);
                 //}
                 lm.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            } catch (SQLException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if ("adminUser".equals(e.getActionCommand())) {
+            try {
+                ListaUsuarios lu = new ListaUsuarios();
+               // if(cadUsuarios.verificaAdmin(true)){
+                lu.setVisible(true);
+                //}else{
+                  //  lu.setVisible(false);
+                //}
+                lu.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            } catch (SQLException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if ("menuCadastro".equals(e.getActionCommand())) {
+            try {
+                jfCadastro c = new jfCadastro();
+                c.setVisible(true);
+                c.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             } catch (SQLException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }

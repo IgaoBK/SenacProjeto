@@ -57,7 +57,7 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Medicamento", "Sobre", "Contraindicação", "Número CAS", "ID"
+                "ID", "Medicamento", "Sobre", "Contraindicação", "Número CAS"
             }
         ));
         jScrollPane1.setViewportView(jtListaMed);

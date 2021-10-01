@@ -40,7 +40,7 @@
                       <Component id="jtfPesquisa" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jbPesquisar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                       <Component id="jbCancelar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
                   </Group>
@@ -125,7 +125,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jbPesquisar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Pesquisar"/>
+        <Property name="text" type="java.lang.String" value="Pesquisar por Nome"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbPesquisarActionPerformed"/>
