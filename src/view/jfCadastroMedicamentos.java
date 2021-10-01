@@ -13,6 +13,7 @@ import static Main.Principal.cadMedicamentos;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import services.MedicamentoServicos;
+import services.ServicosFactory;
  
 
 /**
@@ -28,6 +29,7 @@ public class jfCadastroMedicamentos extends javax.swing.JFrame {
     
     public jfCadastroMedicamentos() throws SQLException {
         initComponents();
+        this.addLinhaParaTabela();
     }
 
     /**
@@ -281,7 +283,7 @@ public class jfCadastroMedicamentos extends javax.swing.JFrame {
         MedicamentoVO m = new MedicamentoVO();
         
         
-        m.setIdMed(cadMedicamentos.addIdMedicamento());
+        
         m.setMedicamento(jtfMedicamento.getText());
         m.setSobre(jtfSobre.getText());
         m.setContraindicacao(jtfContraindicacao.getText());
@@ -305,10 +307,54 @@ public class jfCadastroMedicamentos extends javax.swing.JFrame {
 
     private void jbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfirmarActionPerformed
         // TODO add your handling code here:
+        try{
+            MedicamentoVO mVO = new MedicamentoVO();
+            
+            mVO.setMedicamento(jtfMedicamento.getText());
+            mVO.setSobre(jtfSobre.getText());
+            mVO.setContraindicacao(jtfContraindicacao.getText());
+            mVO.setNumeroCas(jtfNumCas.getText());
+            int id = (int) jtEditar.getValueAt(jtEditar.getSelectedRow(), 0);
+            mVO.setIdMed(id);
+                    
+            MedicamentoServicos ms = ServicosFactory.getMedicamentoServicos();
+            ms.editarMedicamento(mVO);
+            
+            
+            this.addLinhaParaTabela();
+            
+            
+            jtEditar.setEnabled(Boolean.TRUE);
+            jbCadastroMed.setEnabled(Boolean.TRUE);
+            
+            jbLimpar.setEnabled(Boolean.TRUE);
+            jbConfirmar.setEnabled(Boolean.FALSE);
+            
+            jbLimpar.doClick();
+            
+            JOptionPane.showMessageDialog(this, "Dados do Medicamento alterados com sucesso");
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(this, "Erro" + ex.getMessage());
+        }
     }//GEN-LAST:event_jbConfirmarActionPerformed
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
         // TODO add your handling code here:
+        int linha = jtEditar.getSelectedRow();
+        if(linha != -1){
+            jbCadastroMed.setEnabled(Boolean.FALSE);
+            
+            jbLimpar.setEnabled(Boolean.FALSE);
+            jtEditar.setEnabled(Boolean.FALSE);
+            jbConfirmar.setEnabled(Boolean.TRUE);
+            
+            jtfMedicamento.setText((String)jtEditar.getValueAt(linha, 1));
+            jtfSobre.setText((String)jtEditar.getValueAt(linha, 2));
+            jtfContraindicacao.setText((String)jtEditar.getValueAt(linha, 3));
+            jtfNumCas.setText((String)jtEditar.getValueAt(linha, 4));
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não selecionou nenhuma linha");
+        }
     }//GEN-LAST:event_jbEditarActionPerformed
 
 

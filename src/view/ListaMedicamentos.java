@@ -25,6 +25,7 @@ public class ListaMedicamentos extends javax.swing.JFrame {
      */
     public ListaMedicamentos() throws SQLException {
         initComponents();
+        this.addLinhaParaTabela();
     }
 
     /**
@@ -40,7 +41,6 @@ public class ListaMedicamentos extends javax.swing.JFrame {
         jtListaMed = new javax.swing.JTable();
         jbCancelar = new javax.swing.JButton();
         jbAdcionarMed = new javax.swing.JButton();
-        jbSalvar = new javax.swing.JButton();
         jbDeletar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -78,13 +78,6 @@ public class ListaMedicamentos extends javax.swing.JFrame {
             }
         });
 
-        jbSalvar.setText("Salvar");
-        jbSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSalvarActionPerformed(evt);
-            }
-        });
-
         jbDeletar.setText("Deletar");
         jbDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,9 +96,7 @@ public class ListaMedicamentos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jbSalvar)
-                        .addGap(18, 18, 18)
+                        .addGap(138, 138, 138)
                         .addComponent(jbDeletar)
                         .addGap(34, 34, 34)
                         .addComponent(jbCancelar)
@@ -125,8 +116,7 @@ public class ListaMedicamentos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCancelar)
                     .addComponent(jbAdcionarMed)
-                    .addComponent(jbDeletar)
-                    .addComponent(jbSalvar))
+                    .addComponent(jbDeletar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -151,10 +141,6 @@ public class ListaMedicamentos extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jbAdcionarMedActionPerformed
-
-    private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jbDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarActionPerformed
         // TODO add your handling code here:
@@ -188,12 +174,11 @@ public class ListaMedicamentos extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Você não selecionou nenhuma linha");
             } else {
                 MedicamentoServicos clis = services.ServicosFactory.getMedicamentoServicos();
-                String pesq = null;
                 //busca o idMeds da linha selecionada. o zero indica que vamos buscar o valor da primeira coluna
                 int idMeds = (int) jtListaMed.getValueAt(linha, 0);
                 clis.deletarMedicamento(idMeds);
                 JOptionPane.showMessageDialog(rootPane, "Cliente Deletado com Sucesso");
-                this.addLinhaParaTabela(pesq);
+                this.addLinhaParaTabela();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, "Problema Ao Tentar Deletar Medicamento" + ex.getMessage());
@@ -253,7 +238,6 @@ public class ListaMedicamentos extends javax.swing.JFrame {
     private javax.swing.JButton jbAdcionarMed;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbDeletar;
-    private javax.swing.JButton jbSalvar;
     private javax.swing.JTable jtListaMed;
     // End of variables declaration//GEN-END:variables
 }

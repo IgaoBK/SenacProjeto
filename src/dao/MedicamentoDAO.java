@@ -101,7 +101,7 @@ public class MedicamentoDAO {
                     + "medicamento='" + mVO.getMedicamento()+ "',"
                     + "sobre='" + mVO.getSobre()+ "',"
                     + "contraindicacao='" + mVO.getContraindicacao()+ "',"
-                    + "numeroCas='" + mVO.getNumeroCas()+ "',"
+                    + "numeroCas='" + mVO.getNumeroCas()+ "' "
                     + "where idMed=" + mVO.getIdMed()+ "";
 
             stat.executeUpdate(sql);
