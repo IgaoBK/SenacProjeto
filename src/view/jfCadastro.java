@@ -208,8 +208,6 @@ public class jfCadastro extends javax.swing.JFrame {
           UsuarioServicos uis = services.ServicosFactory.getUsuarioServicos();
           try{
               uis.cadastraUsuario(u);
-              
-              this.addLinhaParaTabela();
             jbLimpar.doClick();
             JOptionPane.showMessageDialog(this, u.getNome()+ "Foi Cadastrado Com Sucesso.");
           }catch(Exception ex){
@@ -254,21 +252,7 @@ public class jfCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     
-    public void addLinhaParaTabela() throws SQLException{
-    DefaultTableModel model = (DefaultTableModel) ListaUsuarios.jtListaUsuarios.getModel();
-    model.getDataVector().removeAllElements();
-    model.fireTableDataChanged();
-    Object rowData[] = new Object[5];//define vetor das colunas
-    UsuarioServicos uis = services.ServicosFactory.getUsuarioServicos();
-    for (UsuarioVO uVO: uis.buscarUsuarios()) {
-      rowData[0] = uVO.getIdUsuario();
-      rowData[1] = uVO.getNome();
-      rowData[2] = uVO.getEmail();
-      rowData[3] = uVO.getSenha();
-      rowData[4] = uVO.getTelefone();
-      model.addRow(rowData);
-    }
-    }
+
     
     
     /**
