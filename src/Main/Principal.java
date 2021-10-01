@@ -108,11 +108,11 @@ public class Principal extends JFrame implements ActionListener {
         if ("adminMed".equals(e.getActionCommand())) {
             try {
                 ListaMedicamentos lm = new ListaMedicamentos();
-                if(cadUsuarios.verificaAdmin(true)){
+               // if(cadUsuarios.verificaAdmin(true)){
                 lm.setVisible(true);
-                }else{
-                    lm.setVisible(false);
-                }
+                //}else{
+                  //  lm.setVisible(false);
+                //}
                 lm.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             } catch (SQLException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);

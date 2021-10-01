@@ -8,6 +8,7 @@ package view;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MedicamentoVO;
@@ -37,11 +38,11 @@ public class ListaMedicamentos extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jtListaMed = new javax.swing.JTable();
-        jbConfirmar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
         jbAdcionarMed = new javax.swing.JButton();
         jbSalvar = new javax.swing.JButton();
         jbDeletar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,13 +63,6 @@ public class ListaMedicamentos extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jtListaMed);
-
-        jbConfirmar.setText("Confirmar");
-        jbConfirmar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbConfirmarActionPerformed(evt);
-            }
-        });
 
         jbCancelar.setText("Cancelar/Sair");
         jbCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +92,9 @@ public class ListaMedicamentos extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Painel De Controle de Medicamentos ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,31 +103,30 @@ public class ListaMedicamentos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(186, 186, 186)
-                        .addComponent(jbConfirmar)
+                        .addGap(57, 57, 57)
+                        .addComponent(jbSalvar)
                         .addGap(18, 18, 18)
+                        .addComponent(jbDeletar)
+                        .addGap(34, 34, 34)
                         .addComponent(jbCancelar)
                         .addGap(18, 18, 18)
                         .addComponent(jbAdcionarMed))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jbSalvar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbDeletar)))
-                .addContainerGap(108, Short.MAX_VALUE))
+                        .addGap(105, 105, 105)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 32, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbSalvar)
-                    .addComponent(jbDeletar))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbConfirmar)
                     .addComponent(jbCancelar)
-                    .addComponent(jbAdcionarMed))
+                    .addComponent(jbAdcionarMed)
+                    .addComponent(jbDeletar)
+                    .addComponent(jbSalvar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -143,14 +139,17 @@ public class ListaMedicamentos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jbCancelarActionPerformed
 
-    private void jbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfirmarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbConfirmarActionPerformed
-
     private void jbAdcionarMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdcionarMedActionPerformed
-        // TODO add your handling code here:
-        jfCadastroMedicamentos.getFrames();
-        this.hide();
+        try {
+            // TODO add your handling code here:
+            jfCadastroMedicamentos c = new jfCadastroMedicamentos();
+            c.setVisible(true);
+            c.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListaMedicamentos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jbAdcionarMedActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
@@ -163,13 +162,13 @@ public class ListaMedicamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_jbDeletarActionPerformed
 
     
-    public void addLinhaParaTabela(String pesq) throws SQLException{
+    public void addLinhaParaTabela() throws SQLException{
     DefaultTableModel model = (DefaultTableModel) jtListaMed.getModel();
     model.getDataVector().removeAllElements();
     model.fireTableDataChanged();
     Object rowData[] = new Object[5];//define vetor das colunas
     MedicamentoServicos uis = services.ServicosFactory.getMedicamentoServicos();
-    for (MedicamentoVO uVO: uis.buscarNomeMed(pesq)) {
+    for (MedicamentoVO uVO: uis.buscarMedicamentos()) {
       rowData[0] = uVO.getIdMed();
       rowData[1] = uVO.getMedicamento();
       rowData[2] = uVO.getSobre();
@@ -249,10 +248,10 @@ public class ListaMedicamentos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbAdcionarMed;
     private javax.swing.JButton jbCancelar;
-    private javax.swing.JButton jbConfirmar;
     private javax.swing.JButton jbDeletar;
     private javax.swing.JButton jbSalvar;
     private javax.swing.JTable jtListaMed;

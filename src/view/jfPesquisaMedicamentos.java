@@ -141,7 +141,7 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
 
     
     
-     public void addLinhaParaTabela(String pesq) throws SQLException{
+    public void addLinhaParaTabela(String pesq) throws SQLException{
     DefaultTableModel model = (DefaultTableModel) jtListaMed.getModel();
     model.getDataVector().removeAllElements();
     model.fireTableDataChanged();
