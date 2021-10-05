@@ -165,7 +165,7 @@ public class jfLogin extends javax.swing.JFrame {
                     String emaill = rs.getString("email");
 
                     if(jtfEmailLogin.getText().equals(loginn) && jtfSenhaLogin.getText().equals(senhaa)){
-                        JOptionPane.showMessageDialog(null,"Seja bem vindo: " + nomee,"Aviso",JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null,"Seja bem vindo!!: " + nomee,"Aviso",JOptionPane.INFORMATION_MESSAGE);
                         jLabel2.setText(nomee);
                         
                         jLabel6.setText(emaill);
