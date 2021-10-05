@@ -147,7 +147,7 @@ public class jfLogin extends javax.swing.JFrame {
     private void jbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfirmarActionPerformed
         // Botão acessar
        if(jtfEmailLogin.getText().equals("") || jtfSenhaLogin.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Login ou Senha inválido.", "Aviso, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Login ou Senha inválido.", "Aviso", JOptionPane.ERROR_MESSAGE);
         }else{
 
             Connection con = null;
@@ -187,6 +187,9 @@ public class jfLogin extends javax.swing.JFrame {
                     //erro 2
                     JOptionPane.showMessageDialog(null,"Erro de conexão com o BD","Aviso",JOptionPane.WARNING_MESSAGE);
                     onConClose.printStackTrace();
+                }
+            }
+       }
     }//GEN-LAST:event_jbConfirmarActionPerformed
 
     private void jCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelarActionPerformed
