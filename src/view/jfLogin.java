@@ -5,9 +5,14 @@
  */
 package view;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -141,7 +146,47 @@ public class jfLogin extends javax.swing.JFrame {
 
     private void jbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfirmarActionPerformed
         // Botão acessar
-       
+       if(jtfEmailLogin.getText().equals("") || jtfSenhaLogin.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Login ou Senha inválido.", "Aviso, JOptionPane.ERROR_MESSAGE);
+        }else{
+
+            Connection con = null;
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/projetointegradoryuriigor","usuario","");
+                Statement stm = con.createStatement();
+                String SQL = "Select * from usuario where login = '"+ jtfEmailLogin.getText()+"';";
+                ResultSet rs = stm.executeQuery(SQL);
+
+                while(rs.next()) {
+                    String loginn = rs.getString("login");
+                    String senhaa = rs.getString("senha");
+                    String nomee = rs.getString("nome");
+                    String emaill = rs.getString("email");
+
+                    if(jtfEmailLogin.getText().equals(loginn) && jtfSenhaLogin.getText().equals(senhaa)){
+                        JOptionPane.showMessageDialog(null,"Seja bem vindo: " + nomee,"Aviso",JOptionPane.INFORMATION_MESSAGE);
+                        jLabel2.setText(nomee);
+                        
+                        jLabel6.setText(emaill);
+                        // jLabel11.setText(perfill); //adm ou usuario
+                    }else{
+                        JOptionPane.showMessageDialog(null,"Login ou Senha inválidos.","Aviso",JOptionPane.ERROR_MESSAGE);
+                        jtfEmailLogin.setText("");
+                    }
+                }
+            }catch(SQLException e){
+                e.printStackTrace(); //erro 1
+                JOptionPane.showMessageDialog(null,"Erro de conexão com o BD","Aviso",JOptionPane.WARNING_MESSAGE);
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }finally {
+                try{
+                    con.close();
+                }catch(SQLException onConClose){
+                    //erro 2
+                    JOptionPane.showMessageDialog(null,"Erro de conexão com o BD","Aviso",JOptionPane.WARNING_MESSAGE);
+                    onConClose.printStackTrace();
     }//GEN-LAST:event_jbConfirmarActionPerformed
 
     private void jCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelarActionPerformed
