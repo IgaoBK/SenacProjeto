@@ -6,8 +6,13 @@
 package view;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.MedicamentoVO;
+import services.MedicamentoServicos;
 
 /**
  *
@@ -36,7 +41,7 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtListaMed = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jtfPesquisa = new javax.swing.JTextField();
+        jtfPesquisaMedNome = new javax.swing.JTextField();
         jbPesquisaNome = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
 
@@ -52,7 +57,7 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Medicamento", "Sobre", "Contraindicação", "Número CAS", "ID"
+                "ID", "Medicamento", "Sobre", "Contraindicação", "Número CAS"
             }
         ));
         jScrollPane1.setViewportView(jtListaMed);
@@ -60,13 +65,18 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Pesquisa de Medicamentos");
 
-        jtfPesquisa.addActionListener(new java.awt.event.ActionListener() {
+        jtfPesquisaMedNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfPesquisaActionPerformed(evt);
+                jtfPesquisaMedNomeActionPerformed(evt);
             }
         });
 
         jbPesquisaNome.setText("Pesuisar por Nome");
+        jbPesquisaNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPesquisaNomeActionPerformed(evt);
+            }
+        });
 
         jbCancelar.setText("Cancelar");
         jbCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -88,7 +98,7 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(69, 69, 69)
-                .addComponent(jtfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtfPesquisaMedNome, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbPesquisaNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -101,7 +111,7 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfPesquisaMedNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbPesquisaNome)
                     .addComponent(jbCancelar))
                 .addGap(18, 18, 18)
@@ -111,14 +121,44 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtfPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPesquisaActionPerformed
+    private void jtfPesquisaMedNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPesquisaMedNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtfPesquisaActionPerformed
+    }//GEN-LAST:event_jtfPesquisaMedNomeActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
         // TODO add your handling code here:
         jfPesquisaMedicamentos.this.dispose();
     }//GEN-LAST:event_jbCancelarActionPerformed
+
+    private void jbPesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisaNomeActionPerformed
+        try {
+            // TODO add your handling code here:
+            String pesq = jtfPesquisaMedNome.getText();
+            this.addLinhaParaTabela(pesq);
+        } catch (SQLException ex) {
+            Logger.getLogger(jfPesquisaMedicamentos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbPesquisaNomeActionPerformed
+
+    public void addLinhaParaTabela(String pesq) throws SQLException {
+        DefaultTableModel model = (DefaultTableModel) jtListaMed.getModel();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        Object rowData[] = new Object[5];//define vetor das colunas
+        MedicamentoServicos uis = services.ServicosFactory.getMedicamentoServicos();
+        if (uis.buscarNomeMed(pesq).isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nada Foi Encontrado");
+        } else {
+            for (MedicamentoVO uVO : uis.buscarNomeMed(pesq)) {
+                rowData[0] = uVO.getIdMed();
+                rowData[1] = uVO.getMedicamento();
+                rowData[2] = uVO.getSobre();
+                rowData[3] = uVO.getContraindicacao();
+                rowData[4] = uVO.getNumeroCas();
+                model.addRow(rowData);
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -170,6 +210,6 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbPesquisaNome;
     private javax.swing.JTable jtListaMed;
-    private javax.swing.JTextField jtfPesquisa;
+    private javax.swing.JTextField jtfPesquisaMedNome;
     // End of variables declaration//GEN-END:variables
 }

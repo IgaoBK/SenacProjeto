@@ -31,5 +31,10 @@ public class UsuarioServicos {
         UsuarioDAO uDAO = DAOFactory.getUsuarioDAO();
         uDAO.deletarUsuario(idUsuario);
     }
+    
+    public void editarUsuario(UsuarioVO uVO) throws SQLException{
+        UsuarioDAO uDAO = DAOFactory.getUsuarioDAO();
+        uDAO.editarUsuario(uVO);
+    }
 
 }

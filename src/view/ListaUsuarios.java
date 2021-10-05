@@ -8,6 +8,8 @@ package view;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.UsuarioVO;
 import services.UsuarioServicos;
@@ -55,6 +57,10 @@ public class ListaUsuarios extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtListaUsuario = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jbDeletar = new javax.swing.JButton();
+        jbEditar = new javax.swing.JButton();
+        jbCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,20 +82,62 @@ public class ListaUsuarios extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtListaUsuario);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Painel de Administração de contas de Usuários");
+
+        jbDeletar.setText("Deletar");
+        jbDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDeletarActionPerformed(evt);
+            }
+        });
+
+        jbEditar.setText("Editar");
+        jbEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarActionPerformed(evt);
+            }
+        });
+
+        jbCancelar.setText("Cancelar/Sair");
+        jbCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(83, 83, 83)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(44, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jbDeletar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbCancelar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 29, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbDeletar)
+                    .addComponent(jbEditar)
+                    .addComponent(jbCancelar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -110,6 +158,49 @@ public class ListaUsuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jbDeletarActionPerformed
+
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
+        try {
+            // TODO add your handling code here:
+            jfEditUsuario eu = new jfEditUsuario();
+            eu.setVisible(true);
+            eu.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListaUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbEditarActionPerformed
+
+    private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jbCancelarActionPerformed
+
+    
+    public void deletar() {
+        try {
+            //busca linha que usuario clicou.
+            int linha = jtListaUsuario.getSelectedRow();
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(rootPane, "Você não selecionou nenhuma linha");
+            } else {
+                UsuarioServicos clis = services.ServicosFactory.getUsuarioServicos();
+                //busca o idUs da linha selecionada. o zero indica que vamos buscar o valor da primeira coluna
+                int idUs = (int) jtListaUsuario.getValueAt(linha, 0);
+                clis.deletarUsuario(idUs);
+                JOptionPane.showMessageDialog(rootPane, "Usuário Deletado com Sucesso");
+                this.addLinhaParaTabela();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, "Problema Ao Tentar Deletar Medicamento" + ex.getMessage());
+        }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -150,8 +241,12 @@ public class ListaUsuarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbCancelar;
+    private javax.swing.JButton jbDeletar;
+    private javax.swing.JButton jbEditar;
     private javax.swing.JTable jtListaUsuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -101,7 +101,7 @@ public class MedicamentoDAO {
                     + "medicamento='" + mVO.getMedicamento()+ "',"
                     + "sobre='" + mVO.getSobre()+ "',"
                     + "contraindicacao='" + mVO.getContraindicacao()+ "',"
-                    + "numeroCas='" + mVO.getNumeroCas()+ "',"
+                    + "numeroCas='" + mVO.getNumeroCas()+ "' "
                     + "where idMed=" + mVO.getIdMed()+ "";
 
             stat.executeUpdate(sql);
@@ -113,4 +113,36 @@ public class MedicamentoDAO {
         }
     }
 
+    
+    
+    public ArrayList<MedicamentoVO> buscaNomeMedicamento(String pesq) throws SQLException {
+        //Busca conexão com o banco de dados
+        Connection con = Conexao.getConexao();
+        //cria um objeto "stat" responsável por enviar os comandos de banco do Java para serem sexdcutados dentro do BD
+        Statement stat = con.createStatement();
+        try {
+            String sql;
+            sql = "select * from medicamento where medicamento like '%"+ pesq + "%'";
+
+            ResultSet rs = stat.executeQuery(sql);
+            ArrayList<MedicamentoVO> medicamentos = new ArrayList<>();
+
+            while (rs.next()) {
+                MedicamentoVO m = new MedicamentoVO();
+                m.setIdMed(rs.getInt("idMed"));
+                m.setMedicamento(rs.getString("medicamento"));
+                m.setSobre(rs.getString("sobre"));
+                m.setContraindicacao(rs.getString("contraindicacao"));
+                m.setNumeroCas(rs.getString("numeroCas"));
+                
+                medicamentos.add(m);
+            }
+            return medicamentos;
+        } catch (SQLException ex) {
+            throw new SQLException("Erro ao buscar Medicamento." + ex.getMessage());
+        } finally {
+            con.close();
+            stat.close();
+        }
+    }
 }
