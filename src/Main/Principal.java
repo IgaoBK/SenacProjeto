@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import view.ListaMedicamentos;
 import view.ListaUsuarios;
 import view.jfCadastro;
+import view.jfLogin;
 
 /**
  *
@@ -96,6 +97,14 @@ public class Principal extends JFrame implements ActionListener {
         menuItem.setActionCommand("menuCadastro");
         menuItem.addActionListener(this);
         menu.add(menuItem);
+        
+        /*Usuário-Login*/
+        menuItem = new JMenuItem("Login Usuário",
+                KeyEvent.VK_C);
+
+        menuItem.setActionCommand("menuLogin");
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
 
         return menuBar;
 
@@ -151,6 +160,15 @@ public class Principal extends JFrame implements ActionListener {
                 jfCadastro c = new jfCadastro();
                 c.setVisible(true);
                 c.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            } catch (SQLException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if ("menuLogin".equals(e.getActionCommand())) {
+            try {
+                jfLogin l = new jfLogin();
+                l.setVisible(true);
+                l.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             } catch (SQLException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
