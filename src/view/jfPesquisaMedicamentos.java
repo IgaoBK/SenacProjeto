@@ -57,7 +57,7 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Medicamento", "Sobre", "Contraindicação", "Número CAS"
+                "Medicamento", "Sobre", "Contraindicação", "Número CAS"
             }
         ));
         jScrollPane1.setViewportView(jtListaMed);
@@ -150,11 +150,11 @@ public class jfPesquisaMedicamentos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Nada Foi Encontrado");
         } else {
             for (MedicamentoVO uVO : uis.buscarNomeMed(pesq)) {
-                rowData[0] = uVO.getIdMed();
-                rowData[1] = uVO.getMedicamento();
-                rowData[2] = uVO.getSobre();
-                rowData[3] = uVO.getContraindicacao();
-                rowData[4] = uVO.getNumeroCas();
+                
+                rowData[0] = uVO.getMedicamento();
+                rowData[1] = uVO.getSobre();
+                rowData[2] = uVO.getContraindicacao();
+                rowData[3] = uVO.getNumeroCas();
                 model.addRow(rowData);
             }
         }

@@ -124,21 +124,21 @@ public class UsuarioDAO {
             sql = "select * from usuario where nome like '%"+ pesque + "%'";
 
             ResultSet rs = stat.executeQuery(sql);
-            ArrayList<UsuarioVO> medicamentos = new ArrayList<>();
+            ArrayList<UsuarioVO> usuarios = new ArrayList<>();
 
             while (rs.next()) {
                 UsuarioVO u = new UsuarioVO();
-                m.setIdMed(rs.getInt("idMed"));
-                m.setMedicamento(rs.getString("medicamento"));
-                m.setSobre(rs.getString("sobre"));
-                m.setContraindicacao(rs.getString("contraindicacao"));
-                m.setNumeroCas(rs.getString("numeroCas"));
+                u.setIdUsuario(rs.getInt("idUsuario"));
+                u.setNome(rs.getString("nome"));
+                u.setEmail(rs.getString("email"));
+                u.setSenha(rs.getString("senha"));
+                u.setTelefone(rs.getString("telefone"));
                 
-                medicamentos.add(m);
+                usuarios.add(u);
             }
-            return medicamentos;
+            return usuarios;
         } catch (SQLException ex) {
-            throw new SQLException("Erro ao buscar Medicamento." + ex.getMessage());
+            throw new SQLException("Erro ao buscar Usuário." + ex.getMessage());
         } finally {
             con.close();
             stat.close();

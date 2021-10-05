@@ -8,6 +8,7 @@ package view;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.UsuarioVO;
 import services.UsuarioServicos;
@@ -23,7 +24,7 @@ public class jfPesquisaUsuarios extends javax.swing.JFrame {
      */
     public jfPesquisaUsuarios() throws SQLException {
         initComponents();
-        
+
     }
 
     /**
@@ -49,7 +50,7 @@ public class jfPesquisaUsuarios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nome", "Email", "Telefone"
+                "Nome"
             }
         ));
         jScrollPane1.setViewportView(jtListaUsuarios);
@@ -117,34 +118,35 @@ public class jfPesquisaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
-        // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            String pesq = jtfPesquisaMedNome.getText();
-            this.addLinhaParaTabela(pesq);
+            String pesque = jtfPesquisa.getText();
+            this.addLinhaParaTabela(pesque);
         } catch (SQLException ex) {
-            Logger.getLogger(jfPesquisaMedicamentos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jfPesquisaUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
-    public void addLinhaParaTabela() throws SQLException{
-    DefaultTableModel model = (DefaultTableModel) jtListaUsuarios.getModel();
-    model.getDataVector().removeAllElements();
-    model.fireTableDataChanged();
-    Object rowData[] = new Object[5];//define vetor das colunas
-    UsuarioServicos uis = services.ServicosFactory.getUsuarioServicos();
-    for (UsuarioVO uVO: uis.buscarUsuarios()) {
-      rowData[0] = uVO.getIdUsuario();
-      rowData[1] = uVO.getNome();
-      rowData[2] = uVO.getEmail();
-      rowData[3] = uVO.getSenha();
-      rowData[4] = uVO.getTelefone();
-      model.addRow(rowData);
+    public void addLinhaParaTabela(String pesque) throws SQLException {
+        DefaultTableModel model = (DefaultTableModel) jtListaUsuarios.getModel();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        Object rowData[] = new Object[5];//define vetor das colunas
+        UsuarioServicos uis = services.ServicosFactory.getUsuarioServicos();
+        if (uis.buscarNomeUsuario(pesque).isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nada Foi Encontrado");
+        } else {
+            for (UsuarioVO uVO : uis.buscarNomeUsuario(pesque)) {
+                
+                rowData[0] = uVO.getNome();
+                rowData[1] = uVO.getEmail();
+                rowData[2] = uVO.getSenha();
+                rowData[3] = uVO.getTelefone();
+                model.addRow(rowData);
+            }
+        }
     }
-    }
-    
-    
-    
+
     /**
      * @param args the command line arguments
      */

@@ -38,8 +38,8 @@ public class UsuarioServicos {
     }
 
     
-    public ArrayList<UsuarioVO> buscarNomeMed(String pesque)throws SQLException{
+    public ArrayList<UsuarioVO> buscarNomeUsuario(String pesque)throws SQLException{
         UsuarioDAO uDAO = DAOFactory.getUsuarioDAO();
-        return uDAO.(pesque);
+        return uDAO.buscaNomeUsuario(pesque);
     }
 }
