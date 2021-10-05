@@ -5,9 +5,14 @@
  */
 package view;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,9 +42,9 @@ public class jfLogin extends javax.swing.JFrame {
         jtfSenhaLogin = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jtfEmailLogin = new javax.swing.JTextField();
-        jLimpar = new javax.swing.JButton();
         jCancelar = new javax.swing.JButton();
         jbConfirmar = new javax.swing.JButton();
+        jLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,13 +56,6 @@ public class jfLogin extends javax.swing.JFrame {
 
         jLabel3.setText("Email:");
 
-        jLimpar.setText("Limpar");
-        jLimpar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jLimparActionPerformed(evt);
-            }
-        });
-
         jCancelar.setText("Cancelar");
         jCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,10 +63,17 @@ public class jfLogin extends javax.swing.JFrame {
             }
         });
 
-        jbConfirmar.setText("Confirmar");
+        jbConfirmar.setText("Acessar");
         jbConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbConfirmarActionPerformed(evt);
+            }
+        });
+
+        jLimpar.setText("Limpar");
+        jLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLimparActionPerformed(evt);
             }
         });
 
@@ -76,7 +81,7 @@ public class jfLogin extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,11 +91,11 @@ public class jfLogin extends javax.swing.JFrame {
                         .addGap(90, 90, 90)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLimpar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jbConfirmar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCancelar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCancelar))
+                                .addComponent(jLimpar))
                             .addComponent(jtfSenhaLogin)
                             .addComponent(jtfEmailLogin))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -110,9 +115,9 @@ public class jfLogin extends javax.swing.JFrame {
                     .addComponent(jtfSenhaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLimpar)
                     .addComponent(jCancelar)
-                    .addComponent(jbConfirmar))
+                    .addComponent(jbConfirmar)
+                    .addComponent(jLimpar))
                 .addContainerGap())
         );
 
@@ -126,25 +131,66 @@ public class jfLogin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLimparActionPerformed
-        // TODO add your handling code here:
+        // Botão limpar
         jtfEmailLogin.setText("");
         jtfSenhaLogin.setText("");
         jtfEmailLogin.requestFocus();
     }//GEN-LAST:event_jLimparActionPerformed
 
     private void jbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfirmarActionPerformed
-        // TODO add your handling code here:
+        // Botão acessar
+       if(jtfEmailLogin.getText().equals("") || jtfSenhaLogin.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Login ou Senha inválido.", "Aviso, JOptionPane.ERROR_MESSAGE);
+        }else{
+
+            Connection con = null;
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/projetointegradoryuriigor","usuario","");
+                Statement stm = con.createStatement();
+                String SQL = "Select * from usuario where login = '"+ jtfEmailLogin.getText()+"';";
+                ResultSet rs = stm.executeQuery(SQL);
+
+                while(rs.next()) {
+                    String loginn = rs.getString("login");
+                    String senhaa = rs.getString("senha");
+                    String nomee = rs.getString("nome");
+                    String emaill = rs.getString("email");
+
+                    if(jtfEmailLogin.getText().equals(loginn) && jtfSenhaLogin.getText().equals(senhaa)){
+                        JOptionPane.showMessageDialog(null,"Seja bem vindo: " + nomee,"Aviso",JOptionPane.INFORMATION_MESSAGE);
+                        jLabel2.setText(nomee);
+                        
+                        jLabel6.setText(emaill);
+                        // jLabel11.setText(perfill); //adm ou usuario
+                    }else{
+                        JOptionPane.showMessageDialog(null,"Login ou Senha inválidos.","Aviso",JOptionPane.ERROR_MESSAGE);
+                        jtfEmailLogin.setText("");
+                    }
+                }
+            }catch(SQLException e){
+                e.printStackTrace(); //erro 1
+                JOptionPane.showMessageDialog(null,"Erro de conexão com o BD","Aviso",JOptionPane.WARNING_MESSAGE);
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }finally {
+                try{
+                    con.close();
+                }catch(SQLException onConClose){
+                    //erro 2
+                    JOptionPane.showMessageDialog(null,"Erro de conexão com o BD","Aviso",JOptionPane.WARNING_MESSAGE);
+                    onConClose.printStackTrace();
     }//GEN-LAST:event_jbConfirmarActionPerformed
 
     private void jCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCancelarActionPerformed
-        // TODO add your handling code here:
+        // Botão cancelar
         jfLogin.this.dispose();
     }//GEN-LAST:event_jCancelarActionPerformed
 

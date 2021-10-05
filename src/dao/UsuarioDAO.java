@@ -114,20 +114,20 @@ public class UsuarioDAO {
         }
     }
     
-    public ArrayList<MedicamentoVO> buscaNomeMedicamento(String pesq) throws SQLException {
+    public ArrayList<UsuarioVO> buscaNomeUsuario(String pesque) throws SQLException {
         //Busca conexão com o banco de dados
         Connection con = Conexao.getConexao();
         //cria um objeto "stat" responsável por enviar os comandos de banco do Java para serem sexdcutados dentro do BD
         Statement stat = con.createStatement();
         try {
             String sql;
-            sql = "select * from medicamento where medicamento like '%"+ pesq + "%'";
+            sql = "select * from usuario where nome like '%"+ pesque + "%'";
 
             ResultSet rs = stat.executeQuery(sql);
             ArrayList<UsuarioVO> medicamentos = new ArrayList<>();
 
             while (rs.next()) {
-                MedicamentoVO m = new MedicamentoVO();
+                UsuarioVO u = new UsuarioVO();
                 m.setIdMed(rs.getInt("idMed"));
                 m.setMedicamento(rs.getString("medicamento"));
                 m.setSobre(rs.getString("sobre"));

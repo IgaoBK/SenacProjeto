@@ -2,6 +2,35 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+<<<<<<< HEAD
+            <file>file:/E:/Documentos/NetBeansProjects/ProjetoIntegrador/src/view/jfCadastroMedicamentos.java</file>
+            <file>file:/E:/Documentos/NetBeansProjects/ProjetoIntegrador/src/view/jfPesquisaMedicamentos.java</file>
+            <file>file:/E:/Documentos/NetBeansProjects/ProjetoIntegrador/src/dao/MedicamentoDAO.java</file>
+            <file>file:/E:/Documentos/NetBeansProjects/ProjetoIntegrador/src/view/jfLogin.java</file>
+            <file>file:/E:/Documentos/NetBeansProjects/ProjetoIntegrador/src/Main/Principal.java</file>
+            <file>file:/E:/Documentos/NetBeansProjects/ProjetoIntegrador/src/controler/CMedicamento.java</file>
+            <file>file:/E:/Documentos/NetBeansProjects/ProjetoIntegrador/src/controler/CUsuario.java</file>
+            <file>file:/E:/Documentos/NetBeansProjects/ProjetoIntegrador/src/dao/DAOFactory.java</file>
+            <file>file:/E:/Documentos/NetBeansProjects/ProjetoIntegrador/src/view/jfCadastro.java</file>
+=======
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/dao/MedicamentoDAO.java</file>
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/persistencia/Conexao.java</file>
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/controler/CMedicamento.java</file>
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/view/jfCadastroMedicamentos.java</file>
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/Main/Principal.java</file>
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/view/jfCadastro.java</file>
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/view/jfPesquisaMedicamentos.java</file>
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/dao/DAOFactory.java</file>
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/model/MedicamentoVO.java</file>
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/services/MedicamentoServicos.java</file>
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/services/ServicosFactory.java</file>
+            <file>file:/C:/Users/FNACPOA/Documents/NetBeansProjects/SenacProjeto/src/view/ListaMedicamentos.java</file>
+>>>>>>> 992679c4ad7e9aa72ff8664a02e55a1d15cfc7ca
+        </group>
+>>>>>>> dbf71e7ef28d85e651da312f5ad85f24688cd43f
     </open-files>
 </project-private>
