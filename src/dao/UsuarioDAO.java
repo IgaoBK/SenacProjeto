@@ -114,4 +114,34 @@ public class UsuarioDAO {
         }
     }
     
+    public ArrayList<UsuarioVO> buscaNomeUsuario(String pesque) throws SQLException {
+        //Busca conexão com o banco de dados
+        Connection con = Conexao.getConexao();
+        //cria um objeto "stat" responsável por enviar os comandos de banco do Java para serem sexdcutados dentro do BD
+        Statement stat = con.createStatement();
+        try {
+            String sql;
+            sql = "select * from usuario where nome like '%"+ pesque + "%'";
+
+            ResultSet rs = stat.executeQuery(sql);
+            ArrayList<UsuarioVO> medicamentos = new ArrayList<>();
+
+            while (rs.next()) {
+                UsuarioVO u = new UsuarioVO();
+                m.setIdMed(rs.getInt("idMed"));
+                m.setMedicamento(rs.getString("medicamento"));
+                m.setSobre(rs.getString("sobre"));
+                m.setContraindicacao(rs.getString("contraindicacao"));
+                m.setNumeroCas(rs.getString("numeroCas"));
+                
+                medicamentos.add(m);
+            }
+            return medicamentos;
+        } catch (SQLException ex) {
+            throw new SQLException("Erro ao buscar Medicamento." + ex.getMessage());
+        } finally {
+            con.close();
+            stat.close();
+        }
+    }
 }

@@ -37,4 +37,9 @@ public class UsuarioServicos {
         uDAO.editarUsuario(uVO);
     }
 
+    
+    public ArrayList<UsuarioVO> buscarNomeMed(String pesque)throws SQLException{
+        UsuarioDAO uDAO = DAOFactory.getUsuarioDAO();
+        return uDAO.(pesque);
+    }
 }

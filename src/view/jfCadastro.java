@@ -210,15 +210,12 @@ public class jfCadastro extends javax.swing.JFrame {
               uis.cadastraUsuario(u);
             jbLimpar.doClick();
             JOptionPane.showMessageDialog(this, u.getNome()+ "Foi Cadastrado Com Sucesso.");
-          }catch(Exception ex){
+          }catch(SQLException ex){
               JOptionPane.showMessageDialog(rootPane,
-                      "Um Erroo"+ ex.getMessage(), "Confira Qual o Erro",JOptionPane.ERROR_MESSAGE);
+                      "Erro no Cadastro"+ ex.getMessage(), "Confira Qual o Erro",JOptionPane.ERROR_MESSAGE);
           }
-            
-                //  cadEditoras.getEditora().forEach(editora -> System.out.println(editora));
-        }else{
-            JOptionPane.showMessageDialog(this, "Houve Um Erro No Cadastro, tente Novamente.");
         }
+        
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jtfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNomeActionPerformed

@@ -118,6 +118,13 @@ public class jfPesquisaUsuarios extends javax.swing.JFrame {
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String pesq = jtfPesquisaMedNome.getText();
+            this.addLinhaParaTabela(pesq);
+        } catch (SQLException ex) {
+            Logger.getLogger(jfPesquisaMedicamentos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
     public void addLinhaParaTabela() throws SQLException{

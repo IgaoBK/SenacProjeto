@@ -42,4 +42,5 @@ public class MedicamentoServicos {
         MedicamentoDAO mDAO = DAOFactory.getMedicamentoDAO();
         return mDAO.buscaNomeMedicamento(pesq);
     }
+    
 }
