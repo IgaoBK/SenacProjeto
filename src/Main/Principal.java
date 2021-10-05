@@ -29,7 +29,6 @@ import view.ListaMedicamentos;
 import view.ListaUsuarios;
 import view.jfCadastro;
 
-
 /**
  *
  * @author Yuri e Igor
@@ -59,7 +58,7 @@ public class Principal extends JFrame implements ActionListener {
         menuBar.add(menu);
 
         /*Usuario*/
-        menuItem = new JMenuItem("Menu dos Usuarios",
+        menuItem = new JMenuItem("Pesquisar Usuário",
                 KeyEvent.VK_U);
 
         menuItem.setActionCommand("menuUsuario");
@@ -73,7 +72,7 @@ public class Principal extends JFrame implements ActionListener {
         menuItem.setActionCommand("menuMed");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-        
+
         /*Medicamento-Admin*/
         menuItem = new JMenuItem("Lista Administrativa de Medicamentos",
                 KeyEvent.VK_AT);
@@ -81,7 +80,7 @@ public class Principal extends JFrame implements ActionListener {
         menuItem.setActionCommand("adminMed");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-        
+
         /*Usuário-Admin*/
         menuItem = new JMenuItem("Lista Administrativa de Usuários",
                 KeyEvent.VK_ALT);
@@ -89,18 +88,16 @@ public class Principal extends JFrame implements ActionListener {
         menuItem.setActionCommand("adminUser");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-        
+
         /*Usuário-Cadastro*/
         menuItem = new JMenuItem("Cadastro de Usuários",
                 KeyEvent.VK_C);
 
-        menuItem.setActionCommand("adminCadastro");
+        menuItem.setActionCommand("menuCadastro");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-     
+
         return menuBar;
-        
-        
 
     }
 
@@ -126,10 +123,10 @@ public class Principal extends JFrame implements ActionListener {
         if ("adminMed".equals(e.getActionCommand())) {
             try {
                 ListaMedicamentos lm = new ListaMedicamentos();
-               // if(cadUsuarios.verificaAdmin(true)){
+                // if(cadUsuarios.verificaAdmin(true)){
                 lm.setVisible(true);
                 //}else{
-                  //  lm.setVisible(false);
+                //  lm.setVisible(false);
                 //}
                 lm.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             } catch (SQLException ex) {
@@ -139,10 +136,10 @@ public class Principal extends JFrame implements ActionListener {
         if ("adminUser".equals(e.getActionCommand())) {
             try {
                 ListaUsuarios lu = new ListaUsuarios();
-               // if(cadUsuarios.verificaAdmin(true)){
+                // if(cadUsuarios.verificaAdmin(true)){
                 lu.setVisible(true);
                 //}else{
-                  //  lu.setVisible(false);
+                //  lu.setVisible(false);
                 //}
                 lu.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             } catch (SQLException ex) {
@@ -174,7 +171,7 @@ public class Principal extends JFrame implements ActionListener {
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         return contentPane;
-        
+
     }
 
     private static void createAndShowGUI() {
@@ -203,5 +200,5 @@ public class Principal extends JFrame implements ActionListener {
             }
         });
 
-    }     
+    }
 }
